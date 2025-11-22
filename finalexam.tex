@@ -1,0 +1,267 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm} 
+\usepackage{graphicx} 
+\usepackage{booktabs} 
+\usepackage{hyperref} 
+\usepackage{enumitem}
+\usepackage{fancyhdr} 
+\usepackage{xcolor} 
+
+% Custom styles
+\theoremstyle{definition}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem{definition}{Definition}
+[section]
+\newenvironment{solution*}{\par\noindent\textbf{Solution.}\ }{\hfill$\square$\par}
+\pagestyle{fancy}
+\fancyhf{}
+
+\lhead{MATH-3580 Review}
+\rhead{Aidan Richer}
+\cfoot{\thepage}
+
+% Document info
+\title{\textbf{MATH-3580 Final Exam Review}}
+\author{Aidan Richer}
+\date{November 2025}
+
+% Start of document
+\begin{document}
+
+\maketitle
+\noindent \textbf{The Final Exam contains eight questions covering topics in Chapter 3 (Parts 1 - 3, 5, and 6) and Chapter 4 (Parts 1 - 3, up to Example 5) in the lecture outlines.}
+\tableofcontents
+\bigskip
+
+\section{Definitions}
+\subsection{Metric Space}
+In mathematics, space = set + structure(s).
+
+\begin{definition}
+Let \(X\) be a set. A function \(d: X \times X \rightarrow [0, \infty)\) is called a \textbf{metric} (or distance) on \(X\) if
+\begin{enumerate}
+    \item \(\forall x, y \in X, d(x,y) = 0 \iff x = y;\)
+    \item \(\forall x, y \in X, d(x,y)=d(y,x);\)
+    \item \(\forall x, y, z \in X, d(x,z) \leq d(x,y) + d(y,z).\) (Triangle inequality)
+\end{enumerate}
+In this case, \((X,d)\) is called a \textbf{metric space}.
+\end{definition}
+
+\subsection{Open Ball and Bounded Set}
+\begin{definition}
+    Let \((X,d)\) be a metric space, \(x \in X\), and \(r > 0\).
+\begin{enumerate}
+    \item Define \(B(x,r) = \{y \in X : d(x,y) < r \}\), called the \textbf{open ball} centered at x with radius r, or the \textbf{r-neighborhood of x}.
+    \item A general \textbf{neighborhood of x} is a subset \(U\) of \(X\) such that \(B(x,r) \subseteq U\) for some \(r > 0\).
+    \item A subset \(E \subseteq X\) of a metric space \((X,d)\) is \textbf{bounded} if there exists some \(x_0 \in X\) and \(M > 0\) such that \(d(x,x_0) \leq M\) for all \(x \in E\).
+\end{enumerate}
+\end{definition}
+
+\subsection{Interior Points and Interior}
+\begin{definition}
+    Let \(E \subseteq X\). The \textbf{closure} of \(E\) is the set \(\overline{E} = E \cup E'\).
+    \begin{enumerate}
+        \item An element \(x\) of \(X\) is called an \textbf{interior point} of \(E\) if \(\exists r > 0, B(x,r) \subseteq E\).
+        \item The \textbf{interior} of \(E\) is the set \(E^{\circ}\) of all interior points of E.
+    \end{enumerate}
+    By definition, we have \(E^{\circ} \subseteq E \subseteq \overline{E}\).
+\end{definition}
+
+\subsection{Open Set}
+\begin{definition}
+    A subset \(G \subseteq X\) is called \textbf{open} if \(\forall x \in G, \exists r>0, B(x,r) \subseteq G\). Note, \(\emptyset\) and \(X\) are open in \(X\). That is, a set is open if every point in it has an open ball around it that’s still entirely inside the set.
+\end{definition}
+
+\subsection{Limit Points and Derived Set}
+\begin{definition}
+    Let \(E \subseteq X\). 
+    \begin{enumerate}
+        \item \(x\) is called a \textbf{limit point} of \(E\) (or cluster point, or accumulation point) if \[\forall r>0, B(x,r) \cap E \text{ contains some } y \not=x\]
+        Equivalently, 
+        \[(B(x,r)-\{x\})\cap E \not= \emptyset\]
+        \item We let \(E' = \) the set of all limit points of \(E\), called the \textbf{derived set} of \(E\).
+    \end{enumerate}
+\end{definition}
+
+\subsection{Closed Set}
+\begin{definition}
+    A subset \(E \subseteq X\) is called \textbf{closed} if \(E' \subseteq E\), where \(E'\) is the derived set of E (the set of all limit points of E). Note, \(\emptyset\) and \(X\) are closed in \(X\). That is, a subset \(E \subseteq X\) is closed if every limit point of \(E\) belongs to \(E\).
+    \begin{enumerate}
+        \item \(E\) is open \(\iff X-E\) is closed;
+        \item \(E\) is closed \(\iff X-E\) is open.
+    \end{enumerate}
+\end{definition}
+
+\subsection{Closure}
+\begin{definition}
+    Let \(E \subseteq X.\) The \textbf{closure} of \(E\) is the set \(\overline{E} = E \cup E'\). 
+\end{definition}
+
+\subsection{Boundary Points and Boundary}
+\begin{definition}
+    Let \(X\) be a metric space, \(E \subseteq X\) and \(x \in X\).
+    \begin{enumerate}
+        \item \(x\) is called a \textbf{boundary point} of \(E\) if \(\forall r > 0, B(x,r) \cap E \not = \emptyset\) and \(B(x,r) \cap (X-E) \not = \emptyset\).
+        \item We use \(\partial E\) to denote the set of all boundary points of \(E\), called the \textbf{boundary} of \(E\).
+    \end{enumerate}
+\end{definition}
+
+\subsection{Open Cover}
+\begin{definition}
+    Let \(X\) be a metric space and let \(K \subseteq X\). A family \(\{G_{\alpha}\}\) of open sets in \(X\) is called an \textbf{open cover} of \(K\) if \(K \subseteq \bigcup_{\alpha}G_{\alpha}\). That is, every point of \(K\) lies in at least one of the open sets \(G_{\alpha}\).
+\end{definition}
+
+\subsection{Compact Set}
+\begin{definition}
+    The set \(K\) is called \textbf{compact} if every open cover of \(K\) has a finite \textbf{subcover} of \(K\). That is, if \(K \subseteq \bigcup_{\alpha}G_{\alpha}\), then \(\exists \alpha_1,\dots,\alpha_n\) such that \(K \subseteq \bigcup^n_{i=1}G_{\alpha}\).
+\end{definition}
+
+\subsection{Convergent Sequence}
+\begin{definition}
+    Let \((X,d)\) be a metric space and let \(\{x_n\}\) be a sequence in \(X\). We say that \(\{x_n\}\) is \textbf{convergent} if
+    \[\exists x \in X \text{ such that } \underline{\forall \epsilon > 0, \exists N = N(\epsilon) \in \mathbb{N}, \forall n \geq N, d(x_n, x) < \epsilon}.\]
+    In this case, we say that \(\{x_n\}\) converges to \(x\), and write \(x_n \rightarrow x\).
+\end{definition}
+
+\subsection{Divergent Sequence}
+\begin{definition}
+    We say that \(\{x_n\}\) is \textbf{divergent} if \(\{x_n\}\) is not convergent. That is, \(\forall x \in X, \{x_n\}\) does not converge to \(x\). The \(\epsilon\)-\(N\) description of divergence of \(\{x_n\}\) is
+    \[\underline{\forall x \in X, \exists \epsilon_0 > 0, \forall N, \exists n \geq N, d(x_n,x) \geq \epsilon_0}.\]
+\end{definition}
+
+\subsection{Bounded Sequence}
+\begin{definition}
+    A sequence \(\{x_n\}\) in a metric space \((X,d)\) is \textbf{bounded} if there exists a point \(x_0 \in X\) and a number \(M > 0\) such that 
+    \[d(x_n,x_0)\leq M \text{ for all } n \in \mathbb{N}\]
+    In other words, all terms of the sequence lie within some fixed distance \(M\) of a single point \(x_0\). In simplest terms, a sequence is bounded if all its terms lie inside some ball of finite radius.
+\end{definition}
+
+\subsection{The \(\epsilon\)-\(N\) description of \(x_n \rightarrow x\)}
+\begin{definition}
+    The \(\epsilon\)-\(N\) description of \(x_n \rightarrow x\) is 
+    \[\underline{\forall \epsilon > 0, \exists N=N(\epsilon) \in \mathbb{N}, \forall n \geq N, d(x_n,x) < \epsilon}.\]
+\end{definition}
+
+\subsection{The \(\epsilon\)-\(N\) description of \(x_n \not\rightarrow x\) }
+\begin{definition}
+    The \(\epsilon\)-\(N\) description of \(x_n \not \rightarrow x\) is
+    \[\underline{\exists \epsilon_0 > 0, \forall N, \exists n \in N, d(x_n,x) \geq \epsilon_0}.\]
+\end{definition}
+
+\subsection{The \(\epsilon\)-\(N\) definition of a Cauchy sequence and its negation}
+\begin{definition}
+    Let \(\{x_n\}\) be a sequence in a metric space \((X,d). \ \{x_n\}\) is called \underline{Cauchy} if
+    \[\underline{\forall \epsilon > 0, \exists N, \forall m, n \geq N, d(x_m,x_n)<\epsilon}\]
+    So we can say it's negation: \(\{x_n\}\) is not Cauchy if and only if
+    \[\underline{\exists \epsilon_0 > 0, \forall N, \exists m , n \geq N, d(x_m, x_n) \geq \epsilon_0}\]
+\end{definition}
+
+\subsection{Subsequence}
+\begin{definition}
+    Let \(\{x_n\}\) be a sequence. If \[\{n_k\}_{k\in\mathbb{N}} \text{ is a sequence in } \mathbb{N} \text{ such that } n_1 < n_2 < \dots\]
+    then \(\{x_{n_k}\}^\infty_{k=1}\) is called a \underline{subsequence} of \(\{x_n\}\).
+\end{definition}
+
+\subsection{Convergence, Divergence, Absolute Convergence of a Series}
+\begin{definition}
+    Let \(\{a_n\}\) be a sequence in \(\mathbb{R}\). For each \(n \in \mathbb{N}\), let
+    \[s_n=a_1+\dots+a_n=\sum^n_{k=1}a_k\]
+    called the \underline{\(n^{th}\) partial sum} of the series \(\displaystyle \sum^\infty_{k=1}a_k\).
+    \newline \textbf{Convergence:} If \(s_n \to s \in \mathbb{R}\), then we say that the series \(\displaystyle \sum^\infty_{k=1}a_k\) is \underline{convergent}, and we write \[\sum^\infty_{k=1}a_k=s \text{ (called the sum of } \sum^\infty_{k=1}a_k)\]
+    \newline \textbf{Divergence:} If the sequence of partial sums \(\{s_n\}\) is divergent (does not approach a finite limit), then we say that the series \(\displaystyle \sum^\infty_{k=1}a_k\) is \underline{divergent}.
+    \newline \textbf{Absolute Convergence:} A series \(\displaystyle \sum^\infty_{n=1}a_n\) is \underline{absolutely convergent} if \(\displaystyle \sum^\infty_{n=1}|a_n|\) is convergent.
+\end{definition}
+
+\subsection{Geometric series, P-series, Alternating series, and their Convergence}
+\begin{definition}
+    We observe the following,
+    \newline \textbf{Geometric series:} The \underline{geometric series} \(\displaystyle\sum^\infty_{n=0}x_n\) is convergent \(\iff |x| < 1\). When \(|x|<1\), we have \(\displaystyle \sum^\infty_{n=0}x_n=\frac{1}{1-x}\).
+    \newline \textbf{P-series:} Let \(p \in \mathbb{R}\). For a series of the form \(\displaystyle \sum^\infty_{n=1}\frac{1}{n^p}\) called the p-series, we have
+    \begin{enumerate}[label=(\roman*)]
+        \item If \(p \leq 1\), then \(\displaystyle \sum^\infty_{n=1}\frac{1}{n^p}\) is divergent
+        \item If \(p > 1\), then \(\displaystyle \sum^\infty_{n=1}\frac{1}{n^p}\) is convergent.
+    \end{enumerate}
+    \textbf{Alternating series:} Suppose \(\{b_n\}\) is a sequence in \(\mathbb{R}\) such that \(b_1 \geq b_2 \geq \dots \geq 0\) and \(b_n \to 0\). Then the alternating series of the form \(\displaystyle \sum^\infty_{n=1}(-1)^{n-1}b_n\) and \(\displaystyle \sum^\infty_{n=1}(-1)^nb_n\) are convergent.
+\end{definition}
+
+\subsection{The \(\epsilon\)-\(\delta\) definition of \(\displaystyle \lim_{x \to c}f(x)\) and its negation}
+\begin{definition}
+    Let \((X,d_X)\) and \((Y,d_Y)\) be metric spaces, \(E \subseteq X, \ c \in E', \ f: E \to Y, \text{ and } q \in Y.\) We write the \(\epsilon\)-\(\delta\) definition of \(\displaystyle \lim_{x \to c}f(x)=q\) as 
+    \[\underline{\forall \epsilon > 0, \exists \delta > 0, \forall x \in E \text{ with } 0 < d_X(x,c) < \delta, d_Y(f(x),q) < \epsilon}\]
+    That is, \[x \in \Big(B_X(c,\delta)-\{c\}\Big)\cap E \implies f(x) \in B_Y(q, \epsilon), \text{ or equivalently, }\]
+    \[f\Big((B_X(c,\delta)-\{c\})\cap E\Big) \subseteq B_Y(q, \epsilon)\]
+    \newline \textbf{Negation:} The \(\epsilon\)-\(\delta\) description of the \underline{negation} of \(\displaystyle \lim_{x \to c}f(x)=q\) is
+    \[\underline{\exists \epsilon_0 > 0, \forall \delta > 0, \exists x \in E \text{ with } 0 < d_X(x,c)< \delta, \ d_Y(f(x), q) \geq \epsilon_0}\]
+\end{definition}
+
+\subsection{The \(\epsilon\)-\(\delta\) definition of continuity of \(f\) at \(c\) and its negation}
+\begin{definition}
+    Let \((X,d_X)\) and \((Y,d_Y)\) be metric spaces, \(c \in X\), and \(f:X \to Y\). We say that \(f\) is \underline{continuous at c} and write the \(\epsilon\)-\(\delta\) definition if
+    \[\underline{\forall \epsilon > 0, \exists \delta = \delta(\epsilon, c) > 0, \forall x \text{ with } d_X(x,c)<\delta, \ d_Y(f(x), f(c))< \epsilon}\]
+    That is, \(f\Big(B_X(c,\delta)\Big)\subseteq B_Y\Big(f(c),\epsilon\Big)\). If \(f\) is continuous at every point in \(X\), then we say that \(f\) is \underline{continuous on \(X\)}.
+    \newline \textbf{Negation:} Therefore, we can write the negation and say that \(f\) is not continuous at \(c\) if and only if
+    \[\underline{\exists \epsilon_0>0, \forall \delta > 0, \exists x \text{ with } d_X(x,c) < \delta, \ d_Y(f(x),f(c)) \geq \epsilon_0}\]
+\end{definition}
+
+\subsection{The \(\epsilon\)-\(\delta\) definition of uniform continuity of \(f\)}
+\begin{definition}
+    Let \((X,d_X)\) and \((Y,d_Y)\) be metric spaces, and let \(f:X\to Y\). We say that f is \underline{uniformly continuous on X} if
+    \[\underline{\forall \epsilon>0, \exists \delta = \delta(\epsilon) > 0, \forall p, q \in X \text{ with } d_X(p,q) < \delta, \ d_Y(f(p),f(q)) < \epsilon}\]
+    \textbf{Negation:} We say that the negation, \(f:X \to Y\) is \underline{not uniformly continuous on X} if and only if
+    \[\underline{\exists \epsilon_0>0, \forall \delta > 0, \exists p, q \in X \text{ with } d_X(p,q) < \delta, \ d_Y(f(p),f(q)) \geq \epsilon_0}\]
+\end{definition}
+
+\section{Results}
+\subsection{Chapter 3: Theorem 11}
+
+\subsection{Chapter 3: Theorem 14}
+
+\subsection{Chapter 3: Theorem 15}
+
+\subsection{Chapter 3: Theorem 16}
+
+\subsection{Chapter 3: Theorem 23}
+
+\subsection{Chapter 3: Theorem 24}
+
+\subsection{Chapter 3: Corollary 6}
+
+\subsection{Chapter 3: Corollary 7}
+
+\subsection{Chapter 3: Corollary 8}
+
+\subsection{Chapter 4: Theorem 2}
+
+\subsection{Chapter 4: Theorem 8}
+
+\subsection{Chapter 4: Corollary 1}
+
+\subsection{Chapter 4: Corollary 2}
+
+\subsection{Chapter 4: Corollary 3}
+
+\subsection{Chapter 4: Corollary 7}
+
+
+\section{Questions/Proofs}
+\subsection{Assignment 6: Question \#1}
+
+\subsection{Assignment 6: Question \#2}
+
+\subsection{Assignment 7: Question \#2}
+
+\subsection{Assignment 7: Question \#5}
+
+\subsection{Assignment 7: Question \#6}
+
+\subsection{Assignment 7: Question \#7}
+
+\subsection{Chapter 2: the proof of Theorem 9}
+
+\subsection{Chapter 3: the proof of Theorem 11}
+
+\subsection{Chapter 4: the proof of Theorem 8}
+
+\end{document}
